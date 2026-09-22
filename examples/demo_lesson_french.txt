@@ -1,0 +1,13 @@
+Recruteur: Bonjour, pourquoi voulez-vous travailler chez nous?
+Candidat: Bonjour. J'admire beaucoup la mission de votre entreprise.
+Recruteur: Quelle est votre plus grande force?
+Candidat: Je m'adapte rapidement aux nouveaux défis.
+Recruteur: Avez-vous de l'expérience dans ce domaine?
+Candidat: Oui, j'ai travaillé trois ans dans un poste similaire.
+Recruteur: Quand pouvez-vous commencer?
+Candidat: Je peux commencer dès la semaine prochaine.
+
+pourquoi voulez-vous travailler chez nous - чому ви хочете працювати у нас
+la plus grande force - найбільша сильна сторона
+je m'adapte rapidement - я швидко адаптуюсь
+de l'expérience dans ce domaine - досвід у цій сфері

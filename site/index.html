@@ -1,0 +1,258 @@
+<!doctype html>
+<!-- Посилання на завантаження ведуть на GitHub Releases репозиторію YOUR_GITHUB_NAME/tlumach-kotoba.
+     ЗАМІНИ "YOUR_GITHUB_NAME" на своє ім'я користувача GitHub (див. DEPLOY_GUIDE.md, крок 2). -->
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tlumach Kotoba — вивчай мову живим шляхом</title>
+<meta name="description" content="AI пише живий діалог — Tlumach Kotoba перетворює його на аудіо-урок із паузами для повторення. English, 日本語, Français, Español.">
+<meta property="og:title" content="Tlumach Kotoba — вивчай мову живим шляхом">
+<meta property="og:description" content="AI пише живий діалог — Tlumach Kotoba перетворює його на аудіо-урок із паузами для повторення. English, 日本語, Français, Español.">
+<meta name="theme-color" content="#1E2F4D">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+JP:wght@400;500&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1E2F4D;--sun:#D9423A;--bg:#FBF8F4;--card:#FFFFFF;--line:#E6E1DA;--text:#1B2430;
+--muted:#4A5465;--soft:#6B7686;--btn-bg:#1E2F4D;--btn-fg:#FFFFFF;--btn-hover:#16233B;
+--chip:#EEF1F6;--chip-fg:#1E2F4D;--eyebrow-bg:#FCE9EC;--eyebrow-fg:#B8332C;
+--blue-bg:#EAF2FB;--green-bg:#E9F5EC;--yellow-bg:#FDF4DE;--pink-bg:#FCE9EC;
+--mtn-back:#C9D5E3;--mtn:#2C4264;--torii:#1E2F4D;--cloud:#DCE6F0;--band:#1E2F4D;--glyph:#F2EEE8;--lv:#F4F1EC;--mini:#FFFFFF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#F3ECEE;--sun:#E0564D;--bg:#12172A;--card:#1A2138;--line:#2A3350;--text:#E8ECF3;
+--muted:#B7C0CF;--soft:#98A3B5;--btn-bg:#F6CCD6;--btn-fg:#1E2F4D;--btn-hover:#FBDDE4;
+--chip:#26304B;--chip-fg:#E8ECF3;--eyebrow-bg:#3A2330;--eyebrow-fg:#F6CCD6;
+--blue-bg:#1B2B45;--green-bg:#1A3027;--yellow-bg:#352C16;--pink-bg:#3A2230;
+--mtn-back:#2B3854;--mtn:#0E1426;--torii:#0B1020;--cloud:#243150;--band:#1F2A47;--glyph:#26304B;--lv:#26304B;--mini:#141A2D;}}
+:root[data-theme="dark"]{--ink:#F3ECEE;--sun:#E0564D;--bg:#12172A;--card:#1A2138;--line:#2A3350;--text:#E8ECF3;
+--muted:#B7C0CF;--soft:#98A3B5;--btn-bg:#F6CCD6;--btn-fg:#1E2F4D;--btn-hover:#FBDDE4;
+--chip:#26304B;--chip-fg:#E8ECF3;--eyebrow-bg:#3A2330;--eyebrow-fg:#F6CCD6;
+--blue-bg:#1B2B45;--green-bg:#1A3027;--yellow-bg:#352C16;--pink-bg:#3A2230;
+--mtn-back:#2B3854;--mtn:#0E1426;--torii:#0B1020;--cloud:#243150;--band:#1F2A47;--glyph:#26304B;--lv:#26304B;--mini:#141A2D;}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+a{color:var(--ink)}
+.jp{font-family:'IBM Plex Sans JP','Yu Gothic','Meiryo',sans-serif}
+.script{font-family:'Caveat','Segoe Script',cursive;font-weight:700}
+.disp{font-family:'Fraunces',Georgia,serif}
+.container{max-width:1248px;margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-999px;top:0}.skip:focus{left:16px;top:16px;background:var(--card);padding:10px 14px;border-radius:10px;z-index:50}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;border-radius:12px;padding:12px 22px;font-size:16px;font-weight:600;text-decoration:none;border:1px solid transparent;transition:background .15s,border-color .15s}
+.btn-primary{background:var(--btn-bg);color:var(--btn-fg)}.btn-primary:hover{background:var(--btn-hover);color:var(--btn-fg)}
+.btn-ghost{background:var(--card);color:var(--ink);border-color:var(--line)}.btn-ghost:hover{border-color:var(--ink)}
+.btn svg{flex:none}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid transparent}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand span{font-size:21px;font-weight:700;color:var(--ink)}
+.nav{display:flex;align-items:center;gap:30px}
+.nav a.link{color:var(--muted);text-decoration:none;font-size:15px}.nav a.link:hover{color:var(--ink)}
+.nav .btn{min-height:42px;padding:9px 16px;font-size:15px}
+details.menu{display:none;position:relative}
+details.menu summary{list-style:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer}
+details.menu summary::-webkit-details-marker{display:none}
+details.menu[open] .menu-panel{display:flex}
+.menu-panel{display:none;position:absolute;right:0;top:52px;flex-direction:column;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px;min-width:220px;box-shadow:0 14px 36px rgba(0,0,0,.14)}
+.menu-panel a{padding:11px 12px;border-radius:9px;text-decoration:none;color:var(--text)}.menu-panel a:hover{background:var(--chip)}
+.eyebrow{display:inline-flex;align-self:flex-start;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--eyebrow-fg);background:var(--eyebrow-bg);border-radius:999px;padding:7px 14px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px);gap:40px;align-items:center;padding:36px 0 72px}
+.hero-text{display:flex;flex-direction:column;gap:24px}
+.hero h1{margin:0;font-size:clamp(46px,6.2vw,78px);line-height:1.02;font-weight:700;color:var(--ink)}
+.hero h1 .script{display:block;font-size:1.15em;color:var(--sun);line-height:1}
+.lead{font-size:clamp(17px,1.6vw,20px);line-height:1.6;color:var(--muted);margin:0;max-width:540px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.fine{margin:0;font-size:14px;color:var(--soft)}
+.art{position:relative}
+.art svg.scene{display:block;width:100%;height:auto}
+.s-sun{fill:var(--sun)}.s-torii{fill:var(--torii)}.s-mtn{fill:var(--mtn)}.s-mtn-back{fill:var(--mtn-back)}.s-cloud{fill:var(--cloud)}.s-ground{fill:var(--bg)}
+.float{position:absolute;background:var(--card);border-radius:16px;box-shadow:0 14px 34px rgba(20,30,50,.14);border:1px solid var(--line)}
+.float.bubble{left:-8px;top:6%;padding:14px 16px;width:min(230px,44%)}
+.float.player{right:-6px;bottom:6%;padding:16px;width:min(290px,56%);display:flex;flex-direction:column;gap:10px}
+.bar{height:6px;border-radius:6px;background:var(--chip);overflow:hidden}.bar i{display:block;width:35%;height:100%;background:var(--sun)}
+.play{width:38px;height:38px;border-radius:50%;background:var(--btn-bg);display:flex;align-items:center;justify-content:center;flex:none}
+.play svg path{fill:var(--btn-fg)}
+.chip{display:inline-flex;font-size:12.5px;font-weight:600;color:var(--chip-fg);background:var(--chip);border-radius:999px;padding:5px 11px}
+section{scroll-margin-top:90px}
+.section{padding:88px 0}
+.sec-head{display:flex;flex-direction:column;gap:14px;max-width:760px;margin-bottom:44px}
+.h2{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:clamp(32px,3.6vw,46px);line-height:1.1;margin:0;color:var(--ink)}
+.steps{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr 28px 1fr;gap:12px;align-items:stretch}
+.steps .arrow{align-self:center;color:var(--soft)}
+.step{border-radius:20px;padding:26px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.step h3{margin:0;font-size:20px;font-weight:600}
+.step p{margin:0;font-size:15px;line-height:1.55;color:var(--muted)}
+.num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-weight:700;font-size:17px;flex:none}
+.mini{background:var(--mini);border-radius:14px;border:1px solid var(--line);padding:14px;margin-top:auto;font-size:13.5px}
+.row{display:flex;justify-content:space-between;gap:10px}
+.muted{color:var(--soft)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 26px;display:flex;flex-direction:column;gap:12px}
+.card h3{margin:0;font-size:21px;font-weight:600}
+.card p{margin:0;font-size:15px;line-height:1.55;color:var(--muted)}
+.ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.band{background:var(--band);border-radius:28px;padding:clamp(36px,5vw,64px);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:26px;color:#FFFFFF}
+.band .deco{position:absolute;right:-70px;top:-80px;width:260px;height:260px;border-radius:50%;background:var(--sun);opacity:.9}
+.band > *{position:relative}
+.band h2{margin:0;font-family:'Fraunces',Georgia,serif;font-size:clamp(30px,3.4vw,44px);line-height:1.12;color:#FFFFFF;max-width:760px}
+.band p{margin:0;font-size:18px;line-height:1.6;color:#D3DAE6;max-width:720px}
+.formula{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);color:#FFFFFF;border-radius:999px;padding:11px 18px;font-size:17px;font-weight:500}
+.btn-light{background:#FFFFFF;color:#1E2F4D;align-self:flex-start}.btn-light:hover{background:#F6CCD6;color:#1E2F4D}
+.glyph{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--ink);background:var(--glyph)}
+.lvs{display:flex;gap:6px;flex-wrap:wrap}.lv{font-size:13px;font-weight:600;color:var(--muted);background:var(--lv);border-radius:8px;padding:5px 9px}
+.install{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:inst}
+.inst{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.inst h3{margin:0;font-size:18px}
+.inst p{margin:0;font-size:15px;line-height:1.55;color:var(--muted)}
+code{font-family:'Cascadia Mono',Consolas,monospace;font-size:14px;background:var(--chip);color:var(--text);border-radius:6px;padding:2px 6px;overflow-wrap:anywhere}
+.dl{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(32px,5vw,60px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:44px;align-items:center;position:relative;overflow:hidden}
+.dl .branch{position:absolute;right:-20px;bottom:-30px;width:220px;height:200px;pointer-events:none}
+.dl > *{position:relative}
+.reqs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.reqs li{display:flex;align-items:center;gap:12px;font-size:16px}
+footer.bottom{padding:64px 0 48px}
+.foot{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.foot nav{display:flex;gap:24px;flex-wrap:wrap}
+.foot nav a{color:var(--muted);text-decoration:none}.foot nav a:hover{color:var(--ink)}
+.article{max-width:760px;margin:24px auto 40px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(28px,5vw,56px)}
+.article h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(34px,4vw,44px);line-height:1.1;margin:0 0 6px;color:var(--ink)}
+.article .tag{font-family:'Caveat',cursive;font-size:30px;color:var(--sun);margin:0 0 24px}
+.article h2{font-size:24px;margin:38px 0 12px;color:var(--ink)}
+.article h3{font-size:19px;margin:28px 0 10px}
+.article p,.article li{font-size:17px;line-height:1.72;color:var(--text)}
+.article p{margin:0 0 14px}
+.article ul,.article ol{margin:0 0 16px;padding-left:24px}
+.article li{margin:0 0 8px}
+.article blockquote{margin:22px 0;padding:18px 22px;border-radius:14px;background:var(--chip);font-size:18px;font-weight:600;color:var(--ink);text-align:center}
+.back{display:inline-flex;margin-top:18px}
+@media (max-width:1100px){.steps{grid-template-columns:1fr 1fr}.steps .arrow{display:none}.grid4,.install{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding-top:16px}.art{max-width:560px;margin:0 auto}.dl{grid-template-columns:1fr}.nav a.link{display:none}}
+@media (max-width:640px){.steps,.grid4,.install{grid-template-columns:1fr}.float{display:none}.nav .btn{display:none}details.menu{display:block}.section{padding:64px 0}.foot{align-items:flex-start;flex-direction:column}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Перейти до вмісту</a>
+<header class="top"><div class="container top-in">
+<a class="brand" href="#" aria-label="Tlumach Kotoba — на головну"><svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+<circle class="s-sun" cx="25" cy="15" r="11"/>
+<g class="s-torii"><path d="M4 12 Q20 8 36 12 L37 9 Q20 4 3 9 Z"/><rect x="9" y="12" width="4" height="24" rx="1"/><rect x="27" y="12" width="4" height="24" rx="1"/><rect x="6" y="18" width="28" height="3" rx="1"/></g>
+</svg><span class="disp">Tlumach Kotoba</span></a>
+<nav class="nav" aria-label="Основна навігація"><a class="link" href="#how">Як це працює</a><a class="link" href="#modes">Режими</a><a class="link" href="#method">Методологія</a><a class="link" href="#languages">Мови</a><a class="link" href="#install">Встановлення</a>
+<a class="btn btn-primary" href="https://github.com/YOUR_GITHUB_NAME/tlumach-kotoba/releases/latest/download/TlumachKotoba.exe"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Завантажити</a>
+<details class="menu"><summary aria-label="Меню"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="menu-panel"><a href="#how">Як це працює</a><a href="#modes">Режими</a><a href="#method">Методологія</a><a href="#languages">Мови</a><a href="#install">Встановлення</a><a href="https://github.com/YOUR_GITHUB_NAME/tlumach-kotoba/releases/latest/download/TlumachKotoba.exe">Завантажити для Windows</a></div></details>
+</nav>
+</div></header>
+<main id="main">
+<div class="container">
+<section class="hero" aria-labelledby="hero-title">
+<div class="hero-text">
+<span class="eyebrow">English · <span class="jp">日本語</span> · Français · Español</span>
+<h1 id="hero-title" class="disp">Вивчай мову <span class="script">живим шляхом</span></h1>
+<p class="lead">AI пише живий діалог на твою тему — Tlumach Kotoba перетворює його на аудіо-урок із паузами для повторення. Слухай, повторюй і говори сам.</p>
+<div class="actions"><a class="btn btn-primary" href="https://github.com/YOUR_GITHUB_NAME/tlumach-kotoba/releases/latest/download/TlumachKotoba.exe"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Завантажити для Windows</a><a class="btn btn-ghost" href="#how">Як це працює</a></div>
+<p class="fine">Для україномовних · Не потрібен API-ключ · <a href="https://github.com/YOUR_GITHUB_NAME/tlumach-kotoba/releases">Усі версії</a></p>
+</div>
+<div class="art">
+<svg class="scene" viewBox="0 0 580 540" role="img" aria-label="Червоне сонце, ворота торії, гора та гілка сакури">
+<rect class="s-cloud" x="60" y="120" width="140" height="14" rx="7"/><rect class="s-cloud" x="100" y="144" width="90" height="12" rx="6"/><rect class="s-cloud" x="430" y="330" width="130" height="12" rx="6"/>
+<circle class="s-sun" cx="370" cy="200" r="150"/>
+<polygon class="s-mtn-back" points="0,470 120,360 250,470"/><polygon class="s-mtn-back" points="330,470 460,370 580,440 580,470"/>
+<polygon class="s-mtn" points="150,470 340,290 540,470"/>
+<polygon points="340,290 306,322 322,318 334,338 348,318 366,326" fill="#FFFFFF"/>
+<rect class="s-ground" x="0" y="468" width="580" height="72"/>
+<g class="s-torii"><path d="M78 150 Q230 124 382 150 L392 128 Q230 98 68 128 Z"/><rect x="96" y="150" width="268" height="14" rx="3"/><rect x="222" y="164" width="16" height="30"/><rect x="84" y="194" width="292" height="16" rx="3"/><rect x="118" y="150" width="28" height="318" rx="3"/><rect x="314" y="150" width="28" height="318" rx="3"/></g>
+<path d="M0 360 C60 380 120 400 190 450" stroke="#6B4A3E" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path d="M70 392 C84 372 100 362 124 356" stroke="#6B4A3E" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M130 420 C150 410 162 396 170 378" stroke="#6B4A3E" stroke-width="4" fill="none" stroke-linecap="round"/>
+<circle cx="40.0" cy="358.0" r="12" fill="#F6CCD6"/><circle cx="51.4" cy="366.4" r="12" fill="#F6CCD6"/><circle cx="47.2" cy="379.6" r="12" fill="#F6CCD6"/><circle cx="32.8" cy="379.6" r="12" fill="#F6CCD6"/><circle cx="28.6" cy="366.4" r="12" fill="#F6CCD6"/><circle cx="40" cy="370" r="5.4" fill="#E47C92"/><circle cx="40" cy="370" r="2.2" fill="#C23B55"/><circle cx="126.0" cy="342.0" r="10" fill="#F6CCD6"/><circle cx="135.5" cy="349.0" r="10" fill="#F6CCD6"/><circle cx="132.0" cy="360.0" r="10" fill="#F6CCD6"/><circle cx="120.0" cy="360.0" r="10" fill="#F6CCD6"/><circle cx="116.5" cy="349.0" r="10" fill="#F6CCD6"/><circle cx="126" cy="352" r="4.5" fill="#E47C92"/><circle cx="126" cy="352" r="1.8" fill="#C23B55"/><circle cx="172.0" cy="361.0" r="11" fill="#F6CCD6"/><circle cx="182.4" cy="368.7" r="11" fill="#F6CCD6"/><circle cx="178.6" cy="380.8" r="11" fill="#F6CCD6"/><circle cx="165.4" cy="380.8" r="11" fill="#F6CCD6"/><circle cx="161.6" cy="368.7" r="11" fill="#F6CCD6"/><circle cx="172" cy="372" r="5.0" fill="#E47C92"/><circle cx="172" cy="372" r="2.0" fill="#C23B55"/><circle cx="96.0" cy="401.0" r="9" fill="#F6CCD6"/><circle cx="104.5" cy="407.3" r="9" fill="#F6CCD6"/><circle cx="101.4" cy="417.2" r="9" fill="#F6CCD6"/><circle cx="90.6" cy="417.2" r="9" fill="#F6CCD6"/><circle cx="87.5" cy="407.3" r="9" fill="#F6CCD6"/><circle cx="96" cy="410" r="4.0" fill="#E47C92"/><circle cx="96" cy="410" r="1.6" fill="#C23B55"/><circle cx="190.0" cy="436.0" r="10" fill="#F6CCD6"/><circle cx="199.5" cy="443.0" r="10" fill="#F6CCD6"/><circle cx="196.0" cy="454.0" r="10" fill="#F6CCD6"/><circle cx="184.0" cy="454.0" r="10" fill="#F6CCD6"/><circle cx="180.5" cy="443.0" r="10" fill="#F6CCD6"/><circle cx="190" cy="446" r="4.5" fill="#E47C92"/><circle cx="190" cy="446" r="1.8" fill="#C23B55"/>
+<ellipse cx="250" cy="420" rx="8" ry="4.5" fill="#F6CCD6" transform="rotate(28 250 420)"/><ellipse cx="300" cy="455" rx="7" ry="4" fill="#F6CCD6" transform="rotate(-20 300 455)"/>
+<ellipse cx="470" cy="120" rx="7" ry="4" fill="#F6CCD6" transform="rotate(40 470 120)"/><ellipse cx="530" cy="250" rx="8" ry="4.5" fill="#F6CCD6" transform="rotate(-35 530 250)"/>
+</svg>
+<div class="float bubble" aria-hidden="true"><div class="jp" style="font-size:17px;font-weight:500;">いらっしゃいませ！</div><div class="muted" style="font-size:12.5px;">irasshaimase!</div><div style="font-size:14px;margin-top:6px;">Ласкаво просимо!</div></div>
+<div class="float player" aria-hidden="true">
+<div class="row" style="align-items:center;"><span class="muted" style="font-size:13px;">Крок 3 · Практикуйся</span><span class="chip">Shadowing</span></div>
+<div style="font-size:13.5px;">Озвучення 12 з 34</div><div class="bar"><i></i></div>
+<div style="display:flex;align-items:center;gap:12px;"><span class="play"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8V4Z"/></svg></span><div style="min-width:0;"><div style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">U_kafe_N5_Shadowing.mp3</div><div class="muted" style="font-size:12px;">00:42</div></div></div>
+</div>
+</div>
+</section>
+</div>
+
+<section id="how" class="section" aria-labelledby="how-title"><div class="container">
+<div class="sec-head"><h2 id="how-title" class="h2">Як це працює</h2><p class="lead">Чотири кроки від ідеї до уроку, який можна слухати будь-де.</p></div>
+<div class="steps">
+<article class="step" style="background:var(--blue-bg);"><div style="display:flex;align-items:center;gap:12px;"><span class="num" style="background:#2F6FD6;">1</span><h3>Твоя ідея</h3></div><p>Обери мову, рівень і тему — майстер складе промпт для AI.</p><div class="mini"><div style="display:flex;flex-direction:column;gap:8px;"><div class="row"><span class="muted">Мова</span><span class="jp">日本語</span></div><div class="row"><span class="muted">Рівень</span><span>N5</span></div><div class="row"><span class="muted">Тема</span><span>У кафе</span></div></div></div></article>
+<svg class="arrow" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<article class="step" style="background:var(--green-bg);"><div style="display:flex;align-items:center;gap:12px;"><span class="num" style="background:#2E9E5B;">2</span><h3>AI створює діалог</h3></div><p>Встав промпт у ChatGPT чи інший AI-чат і скопіюй відповідь назад у програму.</p><div class="mini"><div style="display:flex;flex-direction:column;gap:10px;"><div><div class="jp" style="font-size:15px;">コーヒーをください。</div><div class="muted">Каву, будь ласка.</div></div><div><div class="jp" style="font-size:15px;">はい、かしこまりました。</div><div class="muted">Так, звичайно.</div></div></div></div></article>
+<svg class="arrow" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<article class="step" style="background:var(--yellow-bg);"><div style="display:flex;align-items:center;gap:12px;"><span class="num" style="background:#C98A0B;">3</span><h3>Озвучення реплік</h3></div><p>Кожна репліка звучить нейронним голосом — чоловічим чи жіночим, як ти обереш.</p><div class="mini"><div style="display:flex;flex-direction:column;gap:10px;"><div style="display:flex;align-items:center;gap:10px;"><span class="jp" style="width:70px;">いらっしゃい</span><svg width="120" height="28" viewBox="0 0 120 28" aria-hidden="true"><rect x="0" y="11.0" width="3" height="6" rx="1.5" fill="#E3A413"/><rect x="6" y="8.0" width="3" height="12" rx="1.5" fill="#E3A413"/><rect x="12" y="5.0" width="3" height="18" rx="1.5" fill="#E3A413"/><rect x="18" y="9.0" width="3" height="10" rx="1.5" fill="#E3A413"/><rect x="24" y="3.0" width="3" height="22" rx="1.5" fill="#E3A413"/><rect x="30" y="7.0" width="3" height="14" rx="1.5" fill="#E3A413"/><rect x="36" y="10.0" width="3" height="8" rx="1.5" fill="#E3A413"/><rect x="42" y="4.0" width="3" height="20" rx="1.5" fill="#E3A413"/><rect x="48" y="6.0" width="3" height="16" rx="1.5" fill="#E3A413"/><rect x="54" y="9.5" width="3" height="9" rx="1.5" fill="#E3A413"/><rect x="60" y="2.0" width="3" height="24" rx="1.5" fill="#E3A413"/><rect x="66" y="8.0" width="3" height="12" rx="1.5" fill="#E3A413"/><rect x="72" y="5.0" width="3" height="18" rx="1.5" fill="#E3A413"/><rect x="78" y="10.5" width="3" height="7" rx="1.5" fill="#E3A413"/><rect x="84" y="6.5" width="3" height="15" rx="1.5" fill="#E3A413"/><rect x="90" y="3.5" width="3" height="21" rx="1.5" fill="#E3A413"/><rect x="96" y="8.5" width="3" height="11" rx="1.5" fill="#E3A413"/><rect x="102" y="5.5" width="3" height="17" rx="1.5" fill="#E3A413"/><rect x="108" y="10.0" width="3" height="8" rx="1.5" fill="#E3A413"/><rect x="114" y="7.5" width="3" height="13" rx="1.5" fill="#E3A413"/></svg></div><div style="display:flex;align-items:center;gap:10px;"><span class="jp" style="width:70px;">コーヒー</span><svg width="120" height="28" viewBox="0 0 120 28" aria-hidden="true"><rect x="0" y="4.0" width="3" height="20" rx="1.5" fill="#E3A413"/><rect x="6" y="6.0" width="3" height="16" rx="1.5" fill="#E3A413"/><rect x="12" y="9.5" width="3" height="9" rx="1.5" fill="#E3A413"/><rect x="18" y="2.0" width="3" height="24" rx="1.5" fill="#E3A413"/><rect x="24" y="8.0" width="3" height="12" rx="1.5" fill="#E3A413"/><rect x="30" y="5.0" width="3" height="18" rx="1.5" fill="#E3A413"/><rect x="36" y="10.5" width="3" height="7" rx="1.5" fill="#E3A413"/><rect x="42" y="6.5" width="3" height="15" rx="1.5" fill="#E3A413"/><rect x="48" y="3.5" width="3" height="21" rx="1.5" fill="#E3A413"/><rect x="54" y="8.5" width="3" height="11" rx="1.5" fill="#E3A413"/><rect x="60" y="5.5" width="3" height="17" rx="1.5" fill="#E3A413"/><rect x="66" y="10.0" width="3" height="8" rx="1.5" fill="#E3A413"/><rect x="72" y="7.5" width="3" height="13" rx="1.5" fill="#E3A413"/><rect x="78" y="11.0" width="3" height="6" rx="1.5" fill="#E3A413"/><rect x="84" y="8.0" width="3" height="12" rx="1.5" fill="#E3A413"/><rect x="90" y="5.0" width="3" height="18" rx="1.5" fill="#E3A413"/><rect x="96" y="9.0" width="3" height="10" rx="1.5" fill="#E3A413"/><rect x="102" y="3.0" width="3" height="22" rx="1.5" fill="#E3A413"/><rect x="108" y="7.0" width="3" height="14" rx="1.5" fill="#E3A413"/><rect x="114" y="10.0" width="3" height="8" rx="1.5" fill="#E3A413"/></svg></div><div style="display:flex;align-items:center;gap:10px;"><span class="jp" style="width:70px;">はい</span><svg width="120" height="28" viewBox="0 0 120 28" aria-hidden="true"><rect x="0" y="10.5" width="3" height="7" rx="1.5" fill="#E3A413"/><rect x="6" y="6.5" width="3" height="15" rx="1.5" fill="#E3A413"/><rect x="12" y="3.5" width="3" height="21" rx="1.5" fill="#E3A413"/><rect x="18" y="8.5" width="3" height="11" rx="1.5" fill="#E3A413"/><rect x="24" y="5.5" width="3" height="17" rx="1.5" fill="#E3A413"/><rect x="30" y="10.0" width="3" height="8" rx="1.5" fill="#E3A413"/><rect x="36" y="7.5" width="3" height="13" rx="1.5" fill="#E3A413"/><rect x="42" y="11.0" width="3" height="6" rx="1.5" fill="#E3A413"/><rect x="48" y="8.0" width="3" height="12" rx="1.5" fill="#E3A413"/><rect x="54" y="5.0" width="3" height="18" rx="1.5" fill="#E3A413"/><rect x="60" y="9.0" width="3" height="10" rx="1.5" fill="#E3A413"/><rect x="66" y="3.0" width="3" height="22" rx="1.5" fill="#E3A413"/><rect x="72" y="7.0" width="3" height="14" rx="1.5" fill="#E3A413"/><rect x="78" y="10.0" width="3" height="8" rx="1.5" fill="#E3A413"/><rect x="84" y="4.0" width="3" height="20" rx="1.5" fill="#E3A413"/><rect x="90" y="6.0" width="3" height="16" rx="1.5" fill="#E3A413"/><rect x="96" y="9.5" width="3" height="9" rx="1.5" fill="#E3A413"/><rect x="102" y="2.0" width="3" height="24" rx="1.5" fill="#E3A413"/><rect x="108" y="8.0" width="3" height="12" rx="1.5" fill="#E3A413"/><rect x="114" y="5.0" width="3" height="18" rx="1.5" fill="#E3A413"/></svg></div></div></div></article>
+<svg class="arrow" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<article class="step" style="background:var(--pink-bg);"><div style="display:flex;align-items:center;gap:12px;"><span class="num" style="background:#D9423A;">4</span><h3>Готовий аудіо-урок</h3></div><p>Репліки й паузи складаються в один MP3 — слухай на телефоні, комп'ютері чи в плеєрі.</p><div class="mini"><div style="display:flex;align-items:center;gap:12px;"><span style="width:46px;height:46px;border-radius:12px;background:var(--pink-bg);display:flex;align-items:center;justify-content:center;flex:none;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D9423A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><div><div style="font-weight:600;">Один MP3-файл</div><div class="muted">репліки + паузи для повторення</div></div></div></div></article>
+</div>
+</div></section>
+
+<section id="modes" class="section" style="padding-top:24px;" aria-labelledby="modes-title"><div class="container">
+<div class="sec-head"><h2 id="modes-title" class="h2">Чотири режими одного діалогу</h2><p class="lead">Той самий урок, але щоразу з іншою метою — від першого знайомства до самостійного відтворення.</p></div>
+<div class="grid4"><article class="card"><span class="ico" style="background:var(--blue-bg);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2F6FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="2"/><rect x="17" y="14" width="4" height="7" rx="2"/></svg></span><h3>Full Dialogue</h3><p>Весь діалог у природному темпі. Звикаєш до ритму, інтонації та швидкості мови.</p></article><article class="card"><span class="ico" style="background:var(--green-bg);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2E9E5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg></span><h3>Shadowing</h3><p>Повторюєш за диктором: спершу повільно, потім у природному темпі, наостанок — одночасно з ним.</p><span class="chip" style="align-self:flex-start;">3 проходи</span></article><article class="card"><span class="ico" style="background:var(--yellow-bg);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C98A0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg></span><h3>Ключові фрази</h3><p>Фраза, переклад і приклад. Потім звучить лише переклад — і фразу треба пригадати самому.</p></article><article class="card"><span class="ico" style="background:var(--pink-bg);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D9423A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.3 2.4c-.5.2-.8.6-.8 1.1v.5"/><path d="M12 16.5h.01"/></svg></span><h3>Recall</h3><p>Репліка, пауза, відповідь. Перевіряєш не слова, а логіку розмови: що скаже співрозмовник?</p></article></div>
+</div></section>
+
+<section id="method" aria-labelledby="method-title"><div class="container">
+<div class="band">
+<span class="deco" aria-hidden="true"></span>
+<span class="script" style="font-size:30px;color:#F6CCD6;">Методологія</span>
+<h2 id="method-title">Від слухання — до вільного мовлення</h2>
+<p>Tlumach Kotoba не вигадує нового методу. Він поєднує перевірені прийоми — аудіювання, shadowing і активне пригадування — в один послідовний шлях.</p>
+<div class="formula"><span class="pill">почув</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F6CCD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="pill">зрозумів</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F6CCD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="pill">повторив</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F6CCD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="pill">прискорив</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F6CCD6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="pill">відтворив самостійно</span></div>
+<a class="btn btn-light" href="methodology.html">Читати методологію</a>
+</div>
+</div></section>
+
+<section id="languages" class="section" aria-labelledby="lang-title"><div class="container">
+<div class="sec-head"><h2 id="lang-title" class="h2">Чотири мови — одна логіка</h2><p class="lead">Інтерфейс, переклади й підказки — українською. Мова вивчення — на твій вибір.</p></div>
+<div class="grid4">
+<article class="card"><span class="glyph">En</span><h3 class="">English</h3><div class="lvs"><span class=lv>A2</span><span class=lv>B1</span><span class=lv>B2</span><span class=lv>C1</span></div><p>Рівні за шкалою CEFR.</p></article>
+<article class="card"><span class="glyph jp">日</span><h3 class="jp">日本語</h3><div class="lvs"><span class=lv>N5</span><span class=lv>N4</span><span class=lv>N3</span><span class=lv>N2</span><span class=lv>N1</span></div><p>Рівні JLPT, під кожною реплікою — romaji для читання.</p></article>
+<article class="card"><span class="glyph">Fr</span><h3 class="">Français</h3><div class="lvs"><span class=lv>A2</span><span class=lv>B1</span><span class=lv>B2</span><span class=lv>C1</span></div><p>Рівні за шкалою CEFR.</p></article>
+<article class="card"><span class="glyph">Es</span><h3 class="">Español</h3><div class="lvs"><span class=lv>A2</span><span class=lv>B1</span><span class=lv>B2</span><span class=lv>C1</span></div><p>Рівні за шкалою CEFR.</p></article>
+</div>
+</div></section>
+
+<section id="install" class="section" style="padding-top:24px;" aria-labelledby="inst-title"><div class="container">
+<div class="sec-head"><h2 id="inst-title" class="h2">Встановлення</h2><p class="lead">Кілька хвилин — і можна створювати перший урок.</p></div>
+<div class="install"><article class="inst"><h3>1. Завантаж програму</h3><p>Натисни «Завантажити для Windows» — це один файл <code>TlumachKotoba.exe</code>, Python встановлювати не потрібно.</p></article><article class="inst"><h3>2. Встанови FFmpeg</h3><p>Потрібен, щоб складати репліки в один MP3. Найпростіше — у PowerShell: <code>winget install --id Gyan.FFmpeg -e</code></p></article><article class="inst"><h3>3. Запусти</h3><p>Файл поки не має цифрового підпису, тож Windows може показати «Windows захистив ваш ПК». Натисни «Докладніше» → «Виконати в будь-якому разі».</p></article><article class="inst"><h3>4. Створи перший урок</h3><p>Майстер підкаже промпт для AI. Встав відповідь, обери голоси — і створи MP3.</p></article></div>
+</div></section>
+
+<section id="download" aria-labelledby="dl-title"><div class="container">
+<div class="dl">
+<svg class="branch" viewBox="0 0 220 200" aria-hidden="true"><path d="M220 40 C170 70 120 110 60 190" stroke="#6B4A3E" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="160.0" cy="68.0" r="12" fill="#F6CCD6"/><circle cx="171.4" cy="76.4" r="12" fill="#F6CCD6"/><circle cx="167.2" cy="89.6" r="12" fill="#F6CCD6"/><circle cx="152.8" cy="89.6" r="12" fill="#F6CCD6"/><circle cx="148.6" cy="76.4" r="12" fill="#F6CCD6"/><circle cx="160" cy="80" r="5.4" fill="#E47C92"/><circle cx="160" cy="80" r="2.2" fill="#C23B55"/><circle cx="110.0" cy="120.0" r="10" fill="#F6CCD6"/><circle cx="119.5" cy="127.0" r="10" fill="#F6CCD6"/><circle cx="116.0" cy="138.0" r="10" fill="#F6CCD6"/><circle cx="104.0" cy="138.0" r="10" fill="#F6CCD6"/><circle cx="100.5" cy="127.0" r="10" fill="#F6CCD6"/><circle cx="110" cy="130" r="4.5" fill="#E47C92"/><circle cx="110" cy="130" r="1.8" fill="#C23B55"/><circle cx="190.0" cy="41.0" r="9" fill="#F6CCD6"/><circle cx="198.6" cy="47.3" r="9" fill="#F6CCD6"/><circle cx="195.4" cy="57.2" r="9" fill="#F6CCD6"/><circle cx="184.6" cy="57.2" r="9" fill="#F6CCD6"/><circle cx="181.4" cy="47.3" r="9" fill="#F6CCD6"/><circle cx="190" cy="50" r="4.0" fill="#E47C92"/><circle cx="190" cy="50" r="1.6" fill="#C23B55"/></svg>
+<div style="display:flex;flex-direction:column;gap:22px;">
+<h2 id="dl-title" class="h2">Спробуй Tlumach Kotoba</h2>
+<p class="lead">Один файл для Windows — без встановлення Python. Створи перший урок за кілька хвилин.</p>
+<div class="actions"><a class="btn btn-primary" href="https://github.com/YOUR_GITHUB_NAME/tlumach-kotoba/releases/latest/download/TlumachKotoba.exe"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Завантажити для Windows</a><a class="btn btn-ghost" href="#install">Як встановити</a></div>
+</div>
+<ul class="reqs"><li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9E5B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Windows 10 або 11</li><li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9E5B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Інтернет — для озвучення реплік</li><li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9E5B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>FFmpeg — для складання MP3</li><li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9E5B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>API-ключ OpenAI не потрібен</li></ul>
+</div>
+</div></section>
+</main>
+<footer class="bottom"><div class="container foot">
+<div style="display:flex;flex-direction:column;gap:10px;">
+<a class="brand" href="#"><svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true">
+<circle class="s-sun" cx="25" cy="15" r="11"/>
+<g class="s-torii"><path d="M4 12 Q20 8 36 12 L37 9 Q20 4 3 9 Z"/><rect x="9" y="12" width="4" height="24" rx="1"/><rect x="27" y="12" width="4" height="24" rx="1"/><rect x="6" y="18" width="28" height="3" rx="1"/></g>
+</svg><span class="disp" style="font-size:20px;">Tlumach Kotoba</span></a>
+<span class="muted" style="font-size:14px;">Програма для вивчення іноземної мови</span>
+</div>
+<span class="script" style="font-size:34px;color:var(--sun);">Мови відкривають світ</span>
+<nav aria-label="Посилання внизу сторінки">
+<a href="#how">Як це працює</a><a href="methodology.html">Методологія</a><a href="https://github.com/YOUR_GITHUB_NAME/tlumach-kotoba/releases">Усі версії</a><a href="https://github.com/YOUR_GITHUB_NAME/tlumach-kotoba">GitHub</a>
+</nav>
+</div></footer>
+</body>
+</html>

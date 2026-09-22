@@ -1,0 +1,16 @@
+Officer: Good morning. May I see your passport?
+Traveler: Certainly. Here you are.
+Officer: What is the purpose of your trip?
+Traveler: I am visiting my family and staying for two weeks.
+Officer: Do you have a return ticket?
+Traveler: Yes, I do. My return flight is on Friday.
+Officer: Are you carrying any food, plants, or animal products?
+Traveler: No, I am not. I only have personal belongings.
+Officer: How much cash are you carrying?
+Traveler: I have about one thousand dollars in cash.
+Officer: All right. Thank you. You may proceed.
+
+What is the purpose of your trip? - Яка мета вашої поїздки?
+I am visiting my family - Я відвідую свою родину
+Do you have a return ticket? - У вас є зворотний квиток?
+personal belongings - особисті речі

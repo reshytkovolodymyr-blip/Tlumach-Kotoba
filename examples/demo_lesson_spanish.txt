@@ -1,0 +1,13 @@
+Recepcionista: Buenos días. ¿Tiene una reserva?
+Huésped: Sí, a nombre de García.
+Recepcionista: ¿Cuántas noches se va a quedar?
+Huésped: Tres noches, por favor.
+Recepcionista: ¿Prefiere una habitación con vista a la calle o al jardín?
+Huésped: Con vista al jardín, si es posible.
+Recepcionista: Perfecto. Aquí tiene su llave.
+Huésped: Muchas gracias.
+
+tiene una reserva - у вас є бронювання
+cuántas noches se va a quedar - скільки ночей ви залишитесь
+vista al jardín - вид на сад
+aquí tiene su llave - ось ваш ключ
