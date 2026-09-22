@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Збірка PyInstaller (локальна)
+build/
+dist/
+*.spec
+
+# Робочі дані програми — не для репозиторію
+output/
+temporary/
+studio.db
+settings.json
