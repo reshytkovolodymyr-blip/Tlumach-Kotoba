@@ -1,0 +1,76 @@
+name: Build Windows EXE
+
+# Коли запускається:
+#  1. push у main/master — збирає .exe і кладе його в "Artifacts" цього
+#     запуску (зміни лише сайту в site/ чи .md-файлів збірку НЕ запускають);
+#  2. публікація релізу на GitHub (Releases -> Publish release) — збирає
+#     .exe і ПРИКРІПЛЮЄ його до цього релізу. Саме звідси качає кнопка
+#     «Завантажити для Windows» на сайті (releases/latest/download/...);
+#  3. вручну — кнопка "Run workflow" на вкладці Actions.
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - "site/**"
+      - "**/*.md"
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+# Потрібно, щоб workflow міг прикріпити .exe до релізу.
+permissions:
+  contents: write
+
+jobs:
+  build:
+    # Обов'язково windows-latest — PyInstaller збирає .exe лише під ту
+    # платформу, на якій сам запущений (кросс-компіляції немає).
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      # Прапорці МАЮТЬ збігатися з BUILD_EXE.bat (див. CLAUDE.md, п. 19).
+      - name: Build TlumachKotoba.exe
+        run: >
+          python -m PyInstaller --noconsole --onefile
+          --name TlumachKotoba
+          --icon assets/icon.ico
+          --add-data "examples;examples"
+          --add-data "assets;assets"
+          --collect-data pykakasi
+          --collect-all PySide6
+          --collect-all pygame
+          tlumach_kotoba.py
+
+      # Готовий .exe завжди доступний на вкладці Actions -> цей запуск ->
+      # розділ "Artifacts" (зберігається 90 днів).
+      - name: Upload EXE as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TlumachKotoba-windows-exe
+          path: dist/TlumachKotoba.exe
+
+      # Лише для запуску, викликаного публікацією релізу: прикріплюємо
+      # .exe до цього релізу (з'явиться в розділі "Assets" релізу).
+      - name: Attach EXE to the GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: dist/TlumachKotoba.exe
+
+      # IMPORTANT: цей .exe НЕ містить FFmpeg — на машині користувача
+      # ffmpeg має бути встановлений окремо і доступний у PATH.
