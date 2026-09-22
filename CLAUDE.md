@@ -286,3 +286,21 @@ tests/                   — чотири файли, запускаються �
   PyInstaller як і раніше дзеркальні до BUILD_EXE.bat.
 - `DEPLOY_GUIDE.md` — покрокова інструкція користувачу (GitHub, реліз,
   Cloudflare). Оновлювати разом із будь-якою зміною workflow чи site/.
+
+
+## Теки даних і запуск FFmpeg (виправлення після першого .exe)
+
+- `BASE_DIR` у gui.py — лише ВБУДОВАНІ ресурси (у .exe це `sys._MEIPASS`,
+  тимчасова тека, яку Windows видаляє після закриття). Туди НІЧОГО не
+  писати. Реальний баг: уроки й MP3 зникали після закриття .exe.
+- Усе, що програма створює, — через `init_paths()` (викликається в
+  `main()` після `setApplicationName`): уроки й налаштування —
+  `QStandardPaths.AppDataLocation` (Windows `%APPDATA%\Tlumach Kotoba`),
+  MP3 — `MusicLocation/Tlumach Kotoba`. `APP_DATA_DIR` перекриває все
+  (для розробки/тестів). При запуску з коду одноразово копіює старі
+  `studio.db`/`settings.json`, що лежали поруч із кодом.
+- Кожен `subprocess.run` для FFmpeg — з `**_NO_WINDOW`
+  (`CREATE_NO_WINDOW` на Windows), інакше .exe без консолі на мить
+  показує порожнє вікно CMD при кожному запуску FFmpeg.
+- «Папка MP3» — `QDesktopServices.openUrl`, не `os.startfile` (працює на
+  всіх ОС).
