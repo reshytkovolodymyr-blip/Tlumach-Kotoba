@@ -53,6 +53,7 @@ jobs:
           --collect-data pykakasi
           --collect-all PySide6
           --collect-all pygame
+          --collect-all imageio_ffmpeg
           tlumach_kotoba.py
 
       # Готовий .exe завжди доступний на вкладці Actions -> цей запуск ->
@@ -72,5 +73,5 @@ jobs:
           tag_name: ${{ github.event.release.tag_name }}
           files: dist/TlumachKotoba.exe
 
-      # IMPORTANT: цей .exe НЕ містить FFmpeg — на машині користувача
-      # ffmpeg має бути встановлений окремо і доступний у PATH.
+      # FFmpeg вбудований у .exe через пакет imageio-ffmpeg
+      # (--collect-all imageio_ffmpeg) — встановлювати окремо не треба.
