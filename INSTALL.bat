@@ -30,23 +30,9 @@ if errorlevel 1 (
 )
 echo.
 
-echo [3/3] Checking FFmpeg...
-where ffmpeg >nul 2>nul
-if errorlevel 1 (
-    echo FFmpeg not found.
-    where winget >nul 2>nul
-    if errorlevel 1 (
-        echo [WARNING] winget is not available on this system.
-        echo Install FFmpeg manually: https://www.gyan.dev/ffmpeg/builds/
-        echo and add ffmpeg.exe to your PATH.
-    ) else (
-        echo Trying to install FFmpeg via winget...
-        winget install --id Gyan.FFmpeg -e --source winget
-        echo If installation succeeded, RESTART this terminal window.
-    )
-) else (
-    echo FFmpeg found. OK
-)
+echo [3/3] FFmpeg...
+echo FFmpeg is provided by the imageio-ffmpeg package
+echo installed in step [2/3]. Nothing else to install.
 
 echo.
 echo =====================================================

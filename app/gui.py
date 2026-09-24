@@ -34,11 +34,12 @@ import html
 import json
 import os
 import re
+import shutil
 import sys
 from pathlib import Path
 from typing import Optional
 
-from PySide6.QtCore import QByteArray, Qt, QThread, QTimer, QUrl, Signal
+from PySide6.QtCore import QByteArray, QCoreApplication, QStandardPaths, Qt, QThread, QTimer, QUrl, Signal
 from PySide6.QtGui import (
     QDesktopServices,
     QFontDatabase,
@@ -101,18 +102,64 @@ from .tts import EDGE_TTS_AVAILABLE, TTSManager
 from .wizard import PromptWizard
 
 APP_NAME = "Tlumach Kotoba"
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Вбудовані ресурси (приклади, іконки, інфографіка). У зібраному .exe
+# PyInstaller розпаковує їх у тимчасову теку sys._MEIPASS — читати звідти
+# можна, а ЗАПИСУВАТИ туди нічого не можна: Windows видаляє цю теку
+# після закриття програми.
+BASE_DIR = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent.parent))
+SOURCE_DIR = Path(__file__).resolve().parent.parent
 ICON_PATH = BASE_DIR / "assets" / "icon.ico"
 FONTS_DIR = BASE_DIR / "assets" / "fonts"
 ICONS_DIR = BASE_DIR / "assets" / "icons"
 CHEVRON_DOWN_PATH = ICONS_DIR / "chevron_down.png"
 INFOGRAPHIC_PATH = BASE_DIR / "assets" / "images" / "infographic.png"
 
-DATA_DIR = Path(os.environ.get("APP_DATA_DIR", str(BASE_DIR)))
-OUT_DIR = DATA_DIR / "output"
-TEMP_DIR = DATA_DIR / "temporary"
-DB_PATH = DATA_DIR / "studio.db"
-SETTINGS_PATH = DATA_DIR / "settings.json"
+# Постійні дані — визначаються в init_paths() після створення QApplication
+# (QStandardPaths потребує назви застосунку). Значення нижче — лише
+# заглушки до виклику init_paths().
+DATA_DIR = SOURCE_DIR
+OUT_DIR = SOURCE_DIR / "output"
+TEMP_DIR = SOURCE_DIR / "temporary"
+DB_PATH = SOURCE_DIR / "studio.db"
+SETTINGS_PATH = SOURCE_DIR / "settings.json"
+
+
+def init_paths() -> None:
+    """Визначає, де програма зберігає те, що створює сама.
+
+    - Уроки й налаштування: системна тека даних застосунку —
+      Windows %APPDATA%\\Tlumach Kotoba, macOS ~/Library/Application
+      Support/Tlumach Kotoba, Linux ~/.local/share/Tlumach Kotoba.
+    - MP3: «Музика/Tlumach Kotoba» — звичне місце для аудіо.
+    - Змінна середовища APP_DATA_DIR (для розробки й тестів) кладе все
+      в одну вказану теку.
+
+    Одноразово переносить уроки й налаштування, створені раніше при
+    запуску з вихідного коду (тоді вони лежали поруч із кодом)."""
+    global DATA_DIR, OUT_DIR, TEMP_DIR, DB_PATH, SETTINGS_PATH
+    override = os.environ.get("APP_DATA_DIR")
+    if override:
+        DATA_DIR = Path(override)
+        OUT_DIR = DATA_DIR / "output"
+    else:
+        app_data = QStandardPaths.writableLocation(QStandardPaths.StandardLocation.AppDataLocation)
+        DATA_DIR = Path(app_data) if app_data else Path.home() / ".tlumach-kotoba"
+        music = QStandardPaths.writableLocation(QStandardPaths.StandardLocation.MusicLocation)
+        OUT_DIR = Path(music) / APP_NAME if music else DATA_DIR / "output"
+    TEMP_DIR = DATA_DIR / "temporary"
+    DB_PATH = DATA_DIR / "studio.db"
+    SETTINGS_PATH = DATA_DIR / "settings.json"
+    for folder in (DATA_DIR, OUT_DIR, TEMP_DIR):
+        folder.mkdir(parents=True, exist_ok=True)
+
+    if not getattr(sys, "frozen", False):
+        for name, target in (("studio.db", DB_PATH), ("settings.json", SETTINGS_PATH)):
+            legacy = SOURCE_DIR / name
+            if legacy.exists() and not target.exists() and legacy.resolve() != target.resolve():
+                try:
+                    shutil.copy2(legacy, target)
+                except OSError:
+                    pass  # перенесення не критичне — програма просто почне з порожньої історії
 
 # --- Розміри (при масштабі 100%) ---------------------------------------
 BASE_WIDTH = 1120      # оптимальний розмір вікна при першому запуску
@@ -437,9 +484,6 @@ class MainWindow(QMainWindow):
         if ICON_PATH.exists():
             self.setWindowIcon(QIcon(str(ICON_PATH)))
 
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
-        OUT_DIR.mkdir(exist_ok=True)
-        TEMP_DIR.mkdir(exist_ok=True)
 
         self._body_font = body_font
         self._title_font = title_font
@@ -1674,9 +1718,9 @@ class MainWindow(QMainWindow):
             self.status_label.setText(self.m("mp3_error_status"))
 
     def _on_open_output(self):
-        try:
-            os.startfile(str(OUT_DIR))  # type: ignore[attr-defined]  # лише Windows
-        except Exception:  # noqa: BLE001
+        # Працює однаково на Windows (Провідник), macOS (Finder) і Linux.
+        OUT_DIR.mkdir(parents=True, exist_ok=True)
+        if not QDesktopServices.openUrl(QUrl.fromLocalFile(str(OUT_DIR))):
             QMessageBox.information(self, APP_NAME, self.m("open_folder_fallback", dir=OUT_DIR))
 
     # ==================================================================
@@ -1826,6 +1870,10 @@ def main():
     # Чіткий рендеринг при дробовому масштабуванні Windows (125%, 150%).
     QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     app = QApplication(sys.argv)
+    # Назва застосунку визначає імена системних тек даних (init_paths).
+    QCoreApplication.setApplicationName(APP_NAME)
+    QCoreApplication.setOrganizationName("")
+    init_paths()
     body_font, title_font = load_app_fonts()
     window = MainWindow(body_font, title_font)
     window.show()

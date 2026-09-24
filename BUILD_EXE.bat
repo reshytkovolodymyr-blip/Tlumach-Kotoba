@@ -22,6 +22,7 @@ py -m PyInstaller --noconsole --onefile ^
     --collect-data pykakasi ^
     --collect-all PySide6 ^
     --collect-all pygame ^
+    --collect-all imageio_ffmpeg ^
     tlumach_kotoba.py
 
 if errorlevel 1 (
@@ -34,9 +35,8 @@ echo.
 echo =====================================================
 echo   Done! dist\TlumachKotoba.exe
 echo.
-echo   IMPORTANT: the EXE does not bundle FFmpeg. Make sure
-echo   ffmpeg.exe is installed and on PATH on the machine
-echo   where the EXE will run.
+echo   FFmpeg is bundled into the EXE via imageio-ffmpeg
+echo   (--collect-all imageio_ffmpeg), nothing to install.
 echo   --collect-data pykakasi is required, otherwise
 echo   Japanese romanization will not work in the built EXE.
 echo   --collect-all PySide6 is required, otherwise the

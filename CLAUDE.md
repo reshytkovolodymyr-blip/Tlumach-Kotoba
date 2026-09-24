@@ -304,3 +304,9 @@ tests/                   — чотири файли, запускаються �
   показує порожнє вікно CMD при кожному запуску FFmpeg.
 - «Папка MP3» — `QDesktopServices.openUrl`, не `os.startfile` (працює на
   всіх ОС).
+
+- FFmpeg ВБУДОВАНИЙ через пакет `imageio-ffmpeg` (requirements.txt) і
+  `--collect-all imageio_ffmpeg` — однаково в BUILD_EXE.bat і workflow.
+  `audio.check_ffmpeg()` шукає спершу `imageio_ffmpeg.get_ffmpeg_exe()`,
+  потім PATH, потім відомі шляхи. FFmpeg — LGPL/GPL, сумісно з GPL v3
+  проєкту; примітка про ліцензію — у THIRD_PARTY_NOTICES.md.

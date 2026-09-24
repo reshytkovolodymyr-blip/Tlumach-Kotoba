@@ -15,12 +15,34 @@ from __future__ import annotations
 import re
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, List, Optional, Union
 
 from .tts import TTSError, TTSManager
+
+# Програма зібрана без консолі (--noconsole), а FFmpeg — консольна
+# програма. Без цього прапорця Windows на мить відкриває порожнє вікно
+# CMD для КОЖНОГО запуску FFmpeg (пауза, склеювання) — «вікна-привиди»
+# під час генерації. На інших системах прапорця немає й він не потрібен.
+_NO_WINDOW = {"creationflags": subprocess.CREATE_NO_WINDOW} if sys.platform == "win32" else {}
+
+# Програма, запущена з Finder на macOS, не бачить PATH із терміналу,
+# тому FFmpeg, встановлений через Homebrew, треба шукати й за відомими
+# шляхами.
+_FFMPEG_FALLBACKS = ("/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg", "/usr/bin/ffmpeg")
+
+
+def _bundled_ffmpeg() -> Optional[str]:
+    """FFmpeg із пакета imageio-ffmpeg, якщо пакет є і файл на місці."""
+    try:
+        import imageio_ffmpeg
+        path = imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:  # noqa: BLE001 — пакета немає або бінарник не знайдено
+        return None
+    return path if path and Path(path).exists() else None
 
 
 class AudioError(Exception):
@@ -57,7 +79,13 @@ class AudioAssembler:
 
     @staticmethod
     def check_ffmpeg() -> str:
-        ff = shutil.which("ffmpeg")
+        """Порядок пошуку: 1) FFmpeg, вбудований через пакет imageio-ffmpeg
+        (він лежить і всередині зібраного .exe — користувачу нічого не
+        треба встановлювати); 2) FFmpeg у системі (PATH); 3) відомі шляхи
+        Homebrew/Linux (програма, запущена з Finder, не бачить PATH)."""
+        ff = _bundled_ffmpeg() or shutil.which("ffmpeg") or next(
+            (c for c in _FFMPEG_FALLBACKS if Path(c).exists()), None
+        )
         if not ff:
             raise AudioError("FFmpeg не знайдено. Встановіть FFmpeg і повторіть.")
         return ff
@@ -144,7 +172,7 @@ class AudioAssembler:
             result = subprocess.run(
                 [ff, "-y", "-f", "concat", "-safe", "0", "-i", str(concat_file),
                  "-c:a", "libmp3lame", "-b:a", "96k", str(final)],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, **_NO_WINDOW,
             )
             if result.returncode != 0 or not final.exists() or final.stat().st_size < 1000:
                 raise AudioError(
@@ -168,5 +196,5 @@ class AudioAssembler:
         subprocess.run(
             [ffmpeg_bin, "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
              "-t", str(max(0.1, float(seconds))), "-q:a", "5", str(out_path)],
-            check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **_NO_WINDOW,
         )
