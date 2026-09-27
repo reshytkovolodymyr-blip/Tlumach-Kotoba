@@ -99,6 +99,7 @@ from .player import AudioPlayer
 from .session import LessonSession, SessionManager
 from .settings import load_settings, save_settings
 from .tts import EDGE_TTS_AVAILABLE, TTSManager
+from .winutils import force_light_titlebar
 from .wizard import PromptWizard
 
 APP_NAME = "Tlumach Kotoba"
@@ -528,6 +529,7 @@ class MainWindow(QMainWindow):
         self._show_page("new_lesson")
         self._apply_zoom(self.zoom, resize=False)
         self._restore_or_fit_window()
+        force_light_titlebar(self)
 
         warnings = []
         if not EDGE_TTS_AVAILABLE:
@@ -1341,6 +1343,7 @@ class MainWindow(QMainWindow):
         ok_btn.setMinimumWidth(self._px(96))
         fl.addWidget(ok_btn)
         layout.addWidget(footer)
+        force_light_titlebar(dlg)
         dlg.exec()
 
     def _on_ui_language_changed(self, code: str):

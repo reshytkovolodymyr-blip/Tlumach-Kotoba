@@ -32,6 +32,7 @@ from PySide6.QtWidgets import (
 from .content import WIZARD_STRINGS
 from .languages import code_by_label, get_language, language_labels
 from .prompt_builder import build_prompt
+from .winutils import force_light_titlebar
 
 
 class PromptWizard(QDialog):
@@ -41,6 +42,7 @@ class PromptWizard(QDialog):
         self.setWindowTitle(self._t["window_title"])
         self.resize(780, 660)
         self.setMinimumSize(680, 580)
+        force_light_titlebar(self)
 
         self._result = (None, None, None)
         self._build_ui()
